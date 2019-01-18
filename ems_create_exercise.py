@@ -16,7 +16,7 @@ def create_exercise(ex_title, ex_text, ex_public, ex_grader, ex_aas):
         'aas_id': ex_aas
     }
     util.debug(body)
-    resp = requests.post(util.BASE_URL + '/teacher/exercises', json=body, headers=util.get_required_headers())
+    resp = requests.post(util.EMS_BASE_URL + '/teacher/exercises', json=body, headers=util.get_required_headers())
     print(resp.status_code)
 
 

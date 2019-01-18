@@ -17,7 +17,7 @@ def create_course_exercise(course_id, ex_id, ex_threshold, ex_soft_deadline, ex_
         "assessments_student_visible": ex_ass_visible
     }
     util.debug(body)
-    resp = requests.post(util.BASE_URL + '/teacher/courses/' + course_id + '/exercises',
+    resp = requests.post(util.EMS_BASE_URL + '/teacher/courses/' + course_id + '/exercises',
                          json=body, headers=util.get_required_headers())
     print(resp.status_code)
 
