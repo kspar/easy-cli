@@ -26,6 +26,9 @@ if __name__ == '__main__':
     parser.add_argument('--public', action='store_true')
     args = parser.parse_args()
 
-    exercise_text = util.get_file_content(args.text_file)
+    if args.text_file is None:
+        exercise_text = None
+    else:
+        exercise_text = util.get_file_content(args.text_file)
 
     update_exercise(args.id, args.title, exercise_text, args.public)
