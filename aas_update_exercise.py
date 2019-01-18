@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-
 import argparse
+import os
 
 import requests
 
@@ -35,7 +35,8 @@ if __name__ == '__main__':
     grading_script = util.get_file_content(args.grading_file)
 
     assets = list(
-        map(lambda filename: {'file_name': filename, 'file_content': util.get_file_content(filename)},
+        map(lambda filename: {'file_name': os.path.basename(filename),
+                              'file_content': util.get_file_content(filename)},
             args.asset_files)
     )
 
