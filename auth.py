@@ -19,17 +19,17 @@ browser_process = None
 
 
 @app.route('/keycloak.json')
-def keycloak_conf():
+def controller_keycloak_conf():
     return render_template("keycloak.json", idp_url=conf.IDP_URL, client_name=conf.IDP_CLIENT_NAME)
 
 
 @app.route('/login')
-def login():
+def controller_login():
     return render_template("login.html", idp_url=conf.IDP_URL, port=port)
 
 
 @app.route('/deliver-tokens', methods=['POST'])
-def deliver_tokens():
+def controller_deliver_tokens():
     if request.is_json:
         body = request.get_json()
         util.write_restricted_file('access_token', body['access_token'])
@@ -47,7 +47,7 @@ def deliver_tokens():
         return Response(status=400)
 
 
-def get_free_port():
+def _get_free_port():
     for p in range(PORT_RANGE_FIRST, PORT_RANGE_LAST + 1):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
@@ -61,53 +61,53 @@ def get_free_port():
     raise OSError("Unable to bind to ports {} - {}".format(PORT_RANGE_FIRST, PORT_RANGE_LAST))
 
 
-def open_browser(url):
+def _open_browser(url):
     global browser_process
     browser_name = webbrowser.get().name
     browser_process = subprocess.Popen([browser_name, url],
                                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
-def refresh_using_refresh() -> bool:
-    if not os.path.isfile('refresh-token'):
+def _refresh_using_refresh_token() -> bool:
+    if not os.path.isfile('refresh_token'):
+        util.debug("No refresh token found")
         return False
 
-    with open('refresh-token') as f:
+    with open('refresh_token') as f:
         refresh_token = f.read()
 
     token_req_body = {
         'grant_type': 'refresh_token',
         'refresh_token': refresh_token,
-        'client_id': 'dev.lahendus.ut.ee'
+        'client_id': conf.IDP_CLIENT_NAME
     }
 
-    r = requests.post("https://dev.idp.lahendus.ut.ee/auth/realms/master/protocol/openid-connect/token",
-                      data=token_req_body)
+    r = requests.post(conf.IDP_URL + "/auth/realms/master/protocol/openid-connect/token", data=token_req_body)
 
-    print(r.status_code)
-
-    resp_body = r.json()
-
-    print(resp_body)
-    print(resp_body.keys())
-
-    new_access_token = resp_body['access_token']
-    new_refresh_token = resp_body['refresh_token']
-
-    return False
+    if r.status_code == 200:
+        resp_body = r.json()
+        new_access_token = resp_body['access_token']
+        new_refresh_token = resp_body['refresh_token']
+        util.write_restricted_file('access_token', new_access_token)
+        util.write_restricted_file('refresh_token', new_refresh_token)
+        util.debug("Refreshed tokens using refresh token")
+        return True
+    else:
+        util.warn("Refreshing tokens failed with status {}".format(r.status_code))
+        return False
 
 
 def auth():
     global port
 
-    if refresh_using_refresh():
+    if _refresh_using_refresh_token():
         return
 
-    port = get_free_port()
+    port = _get_free_port()
     url = 'http://127.0.0.1:{}/login'.format(port)
 
     # Assume the server starts in 1 second
-    threading.Timer(1, lambda: open_browser(url)).start()
+    threading.Timer(1, lambda: _open_browser(url)).start()
 
     app.run(host='127.0.0.1', port=port)
 
