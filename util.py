@@ -1,9 +1,6 @@
 import os
 
-DEBUG_ENABLED = True
-WARN_ENABLED = True
-EMS_BASE_URL = 'https://ems.lahendus.ut.ee/v1'
-AAS_BASE_URL = 'https://aas.lahendus.ut.ee/v1'
+import conf
 
 
 def get_required_headers():
@@ -28,9 +25,10 @@ def write_restricted_file(file_name, file_content):
 
 
 def debug(msg):
-    if DEBUG_ENABLED:
+    if conf.DEBUG_ENABLED:
         print(msg)
 
+
 def warn(msg):
-    if WARN_ENABLED:
+    if conf.WARN_ENABLED:
         print(msg)

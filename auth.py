@@ -9,8 +9,6 @@ import requests
 import conf
 import util
 
-PORT_RANGE_FIRST = 5100
-PORT_RANGE_LAST = 5109
 
 app = Flask(__name__)
 
@@ -48,7 +46,7 @@ def controller_deliver_tokens():
 
 
 def _get_free_port():
-    for p in range(PORT_RANGE_FIRST, PORT_RANGE_LAST + 1):
+    for p in range(conf.AUTH_PORT_RANGE_FIRST, conf.AUTH_PORT_RANGE_LAST + 1):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             sock.bind(('127.0.0.1', p))
@@ -58,7 +56,7 @@ def _get_free_port():
             # Port already in use?
             pass
 
-    raise OSError("Unable to bind to ports {} - {}".format(PORT_RANGE_FIRST, PORT_RANGE_LAST))
+    raise OSError("Unable to bind to ports {} - {}".format(conf.AUTH_PORT_RANGE_FIRST, conf.AUTH_PORT_RANGE_LAST))
 
 
 def _open_browser(url):

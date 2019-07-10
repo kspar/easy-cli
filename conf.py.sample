@@ -2,3 +2,11 @@
 IDP_URL = 'https://dev.idp.lahendus.ut.ee'
 IDP_CLIENT_NAME = 'dev.lahendus.ut.ee'
 
+AUTH_PORT_RANGE_FIRST = 5100
+AUTH_PORT_RANGE_LAST = 5109
+
+DEBUG_ENABLED = True
+WARN_ENABLED = True
+
+EMS_BASE_URL = 'https://dev.ems.lahendus.ut.ee/v2'
+AAS_BASE_URL = 'https://dev.aas.lahendus.ut.ee/v2'
