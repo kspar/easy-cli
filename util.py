@@ -7,6 +7,7 @@ import auth
 
 
 def get_token_header():
+    # TODO: refactor if you're feeling lucky
     access_token_file = None
 
     if os.path.isfile('access_token'):

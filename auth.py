@@ -11,7 +11,6 @@ import time
 import conf
 import util
 
-
 app = Flask(__name__)
 
 port = None

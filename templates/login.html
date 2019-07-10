@@ -39,15 +39,15 @@
         })
             .then(response => {
                 if (response.ok) {
-                    container.textContent = "It's all good, man";
+                    container.textContent = "It's all good, man. You can now close this page.";
                 } else {
-                    container.textContent = "Something failed";
+                    container.textContent = "Something failed... did you try turning it off and on again?";
                 }
             });
 
-    }).error((e) => {
+    }).error(() => {
         console.error("Keycloak init failed");
-
+        document.getElementById("container").textContent = "Authentication failed... did you try turning it off and on again?";
     });
 
 </script>
