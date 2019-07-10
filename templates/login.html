@@ -18,10 +18,13 @@
 
     }).success((authenticated) => {
         console.debug("Authenticated: " + authenticated);
-        console.debug(kc.token);
 
-        tokens = {
+        const accessTokenValidSec = kc.tokenParsed.exp - kc.tokenParsed.iat;
+        console.debug("Access token valid for: " + accessTokenValidSec);
+
+        const tokenBody = {
             access_token: kc.token,
+            access_token_valid_sec: accessTokenValidSec,
             refresh_token: kc.refreshToken
         };
 
@@ -32,7 +35,7 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(tokens)
+            body: JSON.stringify(tokenBody)
         })
             .then(response => {
                 if (response.ok) {
@@ -41,7 +44,6 @@
                     container.textContent = "Something failed";
                 }
             });
-
 
     }).error((e) => {
         console.error("Keycloak init failed");

@@ -1,11 +1,29 @@
 import os
+import json
+import time
 
 import conf
+import auth
 
 
-def get_required_headers():
-    access_token = get_file_content('access_token').strip()
-    return {'Authorization': 'Bearer ' + access_token}
+def get_token_header():
+    access_token_file = None
+
+    if os.path.isfile('access_token'):
+        access_token_file = json.loads(get_file_content('access_token').strip())
+        expires_at = access_token_file['expires_at']
+
+    if access_token_file is None or time.time() > expires_at + conf.AUTH_TOKEN_MIN_VALID_SEC:
+        auth.auth()
+
+        if os.path.isfile('access_token'):
+            access_token_file = json.loads(get_file_content('access_token').strip())
+            expires_at = access_token_file['expires_at']
+
+        if access_token_file is None or time.time() > expires_at + conf.AUTH_TOKEN_MIN_VALID_SEC:
+            raise RuntimeError("Could not get/refresh tokens")
+
+    return {'Authorization': 'Bearer ' + access_token_file['access_token']}
 
 
 def get_file_content(file_name):

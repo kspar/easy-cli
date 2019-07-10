@@ -5,6 +5,8 @@ import threading
 import webbrowser
 import subprocess
 import requests
+import json
+import time
 
 import conf
 import util
@@ -30,12 +32,12 @@ def controller_login():
 def controller_deliver_tokens():
     if request.is_json:
         body = request.get_json()
-        util.write_restricted_file('access_token', body['access_token'])
-        util.write_restricted_file('refresh_token', body['refresh_token'])
+        _write_tokens(body['access_token'], int(body['access_token_valid_sec']), body['refresh_token'])
 
         if browser_process is not None:
             print("Terminating")
             browser_process.terminate()
+            _shutdown_server()
         else:
             print("Browser process is None ???")
 
@@ -43,6 +45,23 @@ def controller_deliver_tokens():
 
     else:
         return Response(status=400)
+
+
+def _write_tokens(access_token, valid_sec, refresh_token):
+    access_token_file = json.dumps({
+        'access_token': access_token,
+        'expires_at': round(time.time()) + valid_sec
+    })
+
+    util.write_restricted_file('access_token', access_token_file)
+    util.write_restricted_file('refresh_token', refresh_token)
+
+
+def _shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
 
 
 def _get_free_port():
@@ -84,10 +103,7 @@ def _refresh_using_refresh_token() -> bool:
 
     if r.status_code == 200:
         resp_body = r.json()
-        new_access_token = resp_body['access_token']
-        new_refresh_token = resp_body['refresh_token']
-        util.write_restricted_file('access_token', new_access_token)
-        util.write_restricted_file('refresh_token', new_refresh_token)
+        _write_tokens(resp_body['access_token'], resp_body['expires_in'], resp_body['refresh_token'])
         util.debug("Refreshed tokens using refresh token")
         return True
     else:
