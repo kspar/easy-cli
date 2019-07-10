@@ -12,7 +12,7 @@
 <script src="{{ idp_url }}/auth/js/keycloak.js"></script>
 <script>
 
-    kc = Keycloak("{{  }}/static/keycloak.json");
+    kc = Keycloak("http://127.0.0.1:{{ port }}/keycloak.json");
     kc.init({
         onLoad: 'login-required'
 

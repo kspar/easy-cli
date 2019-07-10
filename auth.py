@@ -7,6 +7,7 @@ import subprocess
 import requests
 
 import conf
+import util
 
 PORT_RANGE_FIRST = 5100
 PORT_RANGE_LAST = 5109
@@ -15,16 +16,6 @@ app = Flask(__name__)
 
 port = None
 browser_process = None
-
-
-def write_access_token(access_token):
-    with open(os.open('access-token', os.O_CREAT | os.O_WRONLY, 0o600), 'w') as f:
-        f.write(access_token)
-
-
-def write_refresh_token(refresh_token):
-    with open(os.open('refresh-token', os.O_CREAT | os.O_WRONLY, 0o600), 'w') as f:
-        f.write(refresh_token)
 
 
 @app.route('/keycloak.json')
@@ -41,8 +32,8 @@ def login():
 def deliver_tokens():
     if request.is_json:
         body = request.get_json()
-        write_access_token(body['access_token'])
-        write_refresh_token(body['refresh_token'])
+        util.write_restricted_file('access_token', body['access_token'])
+        util.write_restricted_file('refresh_token', body['refresh_token'])
 
         if browser_process is not None:
             print("Terminating")
@@ -103,7 +94,7 @@ def refresh_using_refresh() -> bool:
     new_access_token = resp_body['access_token']
     new_refresh_token = resp_body['refresh_token']
 
-    return True
+    return False
 
 
 def auth():
