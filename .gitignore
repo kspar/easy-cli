@@ -1,4 +1,9 @@
 
+.idea/
+
 venv/
 
+conf.py
+
 access_token
+refresh_token

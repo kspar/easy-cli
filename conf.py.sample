@@ -1,0 +1,4 @@
+
+IDP_URL = 'https://dev.idp.lahendus.ut.ee'
+IDP_CLIENT_NAME = 'dev.lahendus.ut.ee'
+
