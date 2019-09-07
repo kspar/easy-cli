@@ -9,6 +9,7 @@ import auth
 def get_token_header():
     # TODO: refactor if you're feeling lucky
     access_token_file = None
+    expires_at = 0
 
     if os.path.isfile('access_token'):
         access_token_file = json.loads(get_file_content('access_token').strip())
