@@ -2,12 +2,15 @@ import argparse
 
 from new_course import new_course
 from new_exercise import new_exercise
+from autoass import autoass
 
+
+def handle_teacher_autoass(args):
+    autoass(args.course, args.exercise, args.solution_file)
 
 def handle_new_exercise(args):
     new_exercise(args.title, args.text_file, args.public, args.grader, args.grading_file,
                  args.image, args.max_time, args.max_mem, args.asset_files, args.executors)
-
 
 def handle_new_course(args):
     new_course(args.title)
@@ -35,6 +38,13 @@ if __name__ == '__main__':
     new_course = subparsers.add_parser("new-course")
     new_course.add_argument("--title", required=True)
     new_course.set_defaults(func=handle_new_course)
+
+    # Teacher autoassess
+    autoassess = subparsers.add_parser("autoassess")
+    autoassess.add_argument("--course", required=True)
+    autoassess.add_argument("--exercise", required=True)
+    autoassess.add_argument("--solution-file", required=True)
+    autoassess.set_defaults(func=handle_teacher_autoass)
 
     args = top_parser.parse_args()
     args.func(args)
