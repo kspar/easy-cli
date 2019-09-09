@@ -6,10 +6,11 @@ import conf
 import util
 
 
-def new_exercise(title: str, text: str, public: bool, grader: str,
+def new_exercise(title: str, text_file: str, public: bool, grader: str,
                  grading_file: str, container_image: str, max_time_sec: int, max_mem_mb: int,
                  asset_files: list, executors: list):
     grading_script = util.get_file_content(grading_file)
+    text = util.get_file_content(text_file)
     assets = list(map(lambda filename: {'file_name': os.path.basename(filename),
                                         'file_content': util.get_file_content(filename)},
                       asset_files)
