@@ -36,9 +36,10 @@ def controller_deliver_tokens():
         if browser_process is not None:
             print("Terminating")
             browser_process.terminate()
-            _shutdown_server()
         else:
             print("Browser process is None ???")
+
+        _shutdown_server()
 
         return Response(status=200)
 
