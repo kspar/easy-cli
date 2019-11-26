@@ -30,6 +30,10 @@ def new_exercise(title: str, text_file: str, public: bool, grader: str,
         'assets': assets,
         'executors': executors
     }
+    #print(body)
     resp = requests.post(conf.EMS_BASE_URL + '/exercises', json=body, headers=util.get_token_header())
     print(resp.status_code)
-    print(resp.json())
+    j = resp.json()
+    return j['id']
+
+
