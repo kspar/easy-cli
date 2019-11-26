@@ -4,6 +4,7 @@ from autoass import autoass
 from new_course import new_course
 from new_course_exercise import new_course_exercise
 from new_exercise import new_exercise
+from add_teacher import add_teacher
 
 
 def handle_new_course(args):
@@ -24,15 +25,19 @@ def handle_new_course_ex(args):
 def handle_teacher_autoass(args):
     autoass(args.course, args.exercise, args.solution_file)
 
+def handle_add_teacher(args):
+    add_teacher(args.course_id, args.teachers)
+
+
 
 if __name__ == '__main__':
     top_parser = argparse.ArgumentParser()
     subparsers = top_parser.add_subparsers()
 
     # New course
-    new_course = subparsers.add_parser("new-course")
-    new_course.add_argument("--title", required=True)
-    new_course.set_defaults(func=handle_new_course)
+    new_course_parser = subparsers.add_parser("new-course")
+    new_course_parser.add_argument("--title", required=True)
+    new_course_parser.set_defaults(func=handle_new_course)
 
     # New exercise
     new_ex = subparsers.add_parser("new-exercise")
@@ -67,6 +72,12 @@ if __name__ == '__main__':
     autoassess.add_argument("--exercise", required=True)
     autoassess.add_argument("--solution-file", required=True)
     autoassess.set_defaults(func=handle_teacher_autoass)
+
+    # Add teacher
+    add_teacher_parser = subparsers.add_parser("add-teacher")
+    add_teacher_parser.add_argument('--course-id', required=True)
+    add_teacher_parser.add_argument('--teachers', nargs='+', required=True)
+    add_teacher_parser.set_defaults(func=handle_add_teacher)
 
     args = top_parser.parse_args()
     args.func(args)
