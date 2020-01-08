@@ -6,7 +6,7 @@ import util
 
 def add_teacher(course_id: str, teachers: list):
 
-    teachers_list = list(map(lambda e: {'teacher_id': e}, teachers))
+    teachers_list = list(map(lambda e: {'email': e}, teachers))
 
     body = {
         'teachers': teachers_list
