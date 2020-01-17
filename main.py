@@ -5,6 +5,7 @@ from new_course import new_course
 from new_course_exercise import new_course_exercise
 from new_exercise import new_exercise
 from add_teacher import add_teacher
+from reorder_excercises import reorder_exercises
 
 
 def handle_new_course(args):
@@ -12,8 +13,10 @@ def handle_new_course(args):
 
 
 def handle_new_exercise(args):
-    new_exercise(args.title, args.text_file, args.public, args.grader, args.grading_file,
+    id = new_exercise(args.title, args.html_file, args.adoc_file, args.public, args.grader, args.grading_file,
                  args.image, args.max_time, args.max_mem, args.asset_files, args.executors)
+
+    print(id)
 
 
 def handle_new_course_ex(args):
@@ -27,6 +30,9 @@ def handle_teacher_autoass(args):
 
 def handle_add_teacher(args):
     add_teacher(args.course_id, args.teachers)
+
+def handle_reorder(args):
+    reorder_exercises(args.course_id, args.exercise_id, args.new_index)
 
 
 
@@ -42,7 +48,8 @@ if __name__ == '__main__':
     # New exercise
     new_ex = subparsers.add_parser("new-exercise")
     new_ex.add_argument("--title", required=True)
-    new_ex.add_argument("--text-file", required=True)
+    new_ex.add_argument("--html-file", required=False)
+    new_ex.add_argument("--adoc-file", required=False)
     new_ex.add_argument("--public", action='store_true')
     new_ex.add_argument("--grader", required=True, choices=['auto', 'teacher'])
     new_ex.add_argument("--grading-file", required=False)
@@ -50,7 +57,7 @@ if __name__ == '__main__':
     new_ex.add_argument("--max-time", required=False, type=int)
     new_ex.add_argument("--max-mem", required=False, type=int)
     new_ex.add_argument('--asset-files', nargs='*', default=[])
-    new_ex.add_argument('--executors', nargs='+', required=False)
+    new_ex.add_argument('--executors', nargs='+', default=[])
     new_ex.set_defaults(func=handle_new_exercise)
 
     # New course exercise
@@ -79,5 +86,13 @@ if __name__ == '__main__':
     add_teacher_parser.add_argument('--teachers', nargs='+', required=True)
     add_teacher_parser.set_defaults(func=handle_add_teacher)
 
+    # Reorder exercises
+    reorder = subparsers.add_parser("reorder")
+    reorder.add_argument("--course-id", required=True)
+    reorder.add_argument("--exercise-id", required=True)
+    reorder.add_argument("--new-index", required=True, type=int)
+    reorder.set_defaults(func=handle_reorder)
+
     args = top_parser.parse_args()
     args.func(args)
+
