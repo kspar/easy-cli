@@ -6,6 +6,8 @@ from new_course_exercise import new_course_exercise
 from new_exercise import new_exercise
 from add_teacher import add_teacher
 from reorder_excercises import reorder_exercises
+from link_moodle import link_moodle_course
+from sync_grades import sync_grades
 
 
 def handle_new_course(args):
@@ -33,6 +35,12 @@ def handle_add_teacher(args):
 
 def handle_reorder(args):
     reorder_exercises(args.course_id, args.exercise_id, args.new_index)
+
+def handle_link_moodle(args):
+    link_moodle_course(args.course_id, args.moodle_short_name, args.sync_students, args.sync_grades)
+
+def handle_sync_grades(args):
+    sync_grades(args.course_id)
 
 
 
@@ -92,6 +100,19 @@ if __name__ == '__main__':
     reorder.add_argument("--exercise-id", required=True)
     reorder.add_argument("--new-index", required=True, type=int)
     reorder.set_defaults(func=handle_reorder)
+
+    # Link Moodle course
+    link_moodle = subparsers.add_parser("link-moodle")
+    link_moodle.add_argument("--course-id", required=True)
+    link_moodle.add_argument("--moodle-short-name", required=True)
+    link_moodle.add_argument("--sync-students", action='store_true', default=False)
+    link_moodle.add_argument("--sync-grades", action='store_true', default=False)
+    link_moodle.set_defaults(func=handle_link_moodle)
+
+    # Synchronize grades
+    sync_grades_parser = subparsers.add_parser("sync-grades")
+    sync_grades_parser.add_argument("--course-id", required=True)
+    sync_grades_parser.set_defaults(func=handle_sync_grades)
 
     args = top_parser.parse_args()
     args.func(args)
