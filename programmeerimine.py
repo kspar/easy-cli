@@ -1,11 +1,12 @@
 from new_exercise import new_exercise
 from new_course import new_course
 from new_course_exercise import new_course_exercise
+from add_teacher import add_teacher
 
 
 def create_exercises():
     # .../opprog-easy-exercises/exercises/programmeerimine
-    base_path = '...'
+    base_path = '/mnt/c/Users/Kusti/Desktop/opprog-easy-exercises/exercises/programmeerimine'
     executors = ['1']
     grader = 'AUTO'
     container_image = 'pygrader'
@@ -38,126 +39,28 @@ def create_exercises():
          'title': '2.1 Jäätumine',
          'assets': ['/tester.py']
          },
-        {'path': '/2/spamm',
-         'title': '2.2 Spämm',
-         'assets': ['/tester.py']
-         },
+
         {'path': '/2/leedu-perenimed',
-         'title': '2.3 Leedu perenimed',
+         'title': '2.2 Leedu perenimed',
          'assets': ['/tester.py']
          },
         {'path': '/2/pulss',
-         'title': '2.4a Pulss',
+         'title': '2.3a Pulss',
          'assets': ['/tester.py']
          },
         {'path': '/2/istekoht',
-         'title': '2.4b Istekoht',
+         'title': '2.3b Istekoht',
          'assets': ['/tester.py']
          },
         {'path': '/2/bussid',
-         'title': '2.4c Bussid',
+         'title': '2.3c Bussid',
          'assets': ['/tester.py']
          },
-        {'path': '/3/aratus',
-         'title': '3.1 Äratus',
+        {'path': '/2/spamm',
+         'title': '2.3d Spämm',
          'assets': ['/tester.py']
-         },
-        {'path': '/3/laikimine',
-         'title': '3.2 Laikimine',
-         'assets': ['/tester.py']
-         },
-        {'path': '/3/taringumang',
-         'title': '3.3 Täringumäng',
-         'assets': ['/tester.py']
-         },
-        {'path': '/3/laikimine2',
-         'title': '3.4a Laikimine v2',
-         'assets': ['/tester.py']
-         },
-        {'path': '/3/vabavisked',
-         'title': '3.4b Vabavisked',
-         'assets': ['/tester.py']
-         },
-        {'path': '/3/male',
-         'title': '3.4c Male',
-         'assets': ['/tester.py']
-         },
-        {'path': '/4/suured-tahed',
-         'title': '4.1 Suured tähed',
-         'assets': ['/tester.py']
-         },
-        {'path': '/5/mootorrattad',
-         'title': '5.1 Mootorrattad',
-         'assets': ['/tester.py']
-         },
-        {'path': '/5/laikimine',
-         'title': '5.2 Laikimine (for-tsükliga)',
-         'assets': ['/tester.py']
-         },
-        {'path': '/5/sissetulekud',
-         'title': '5.3 Sissetulekud',
-         'assets': ['/tester.py']
-         },
-        {'path': '/5/jukebox',
-         'title': '5.4a Jukebox',
-         'assets': ['/tester.py']
-         },
-        {'path': '/5/loomulik-iive',
-         'title': '5.4b Loomulik iive',
-         'assets': ['/tester.py']
-         },
-        {'path': '/5/tahvli-juurde',
-         'title': '5.4c Tahvli juurde',
-         'assets': ['/tester.py']
-         },
-        {'path': '/6/banner',
-         'title': '6.1 Bänner',
-         'assets': ['/tester.py', '/rattad.py']
-         },
-        {'path': '/6/teleri-suurus',
-         'title': '6.2 Teleri suurus',
-         'assets': ['/tester.py']
-         },
-        {'path': '/6/peo-eelarve',
-         'title': '6.3 Peo eelarve',
-         'assets': ['/tester.py']
-         },
-        {'path': '/6/tervitused-motisklustega',
-         'title': '6.4a Tervitused mõtisklustega',
-         'assets': ['/tester.py']
-         },
-        {'path': '/6/mundid',
-         'title': '6.4b Mündid',
-         'assets': ['/tester.py']
-         },
-        {'path': '/6/kuupaev',
-         'title': '6.4c Kuupäev',
-         'assets': ['/tester.py']
-         },
-        {'path': '/7/telegramm',
-         'title': '7.1 Telegramm',
-         'assets': ['/tester.py']
-         },
-        {'path': '/7/paevik',
-         'title': '7.2 Päevik',
-         'assets': ['/tester.py']
-         },
-        {'path': '/7/kalkulaator',
-         'title': '7.3 Kalkulaator',
-         'assets': ['/tester.py']
-         },
-        {'path': '/7/taiendatud-peo-eelarve',
-         'title': '7.4a Täiendatud peo eelarve',
-         'assets': ['/tester.py']
-         },
-        {'path': '/7/nimepaev',
-         'title': '7.4b Nimepäev',
-         'assets': ['/tester.py']
-         },
-        {'path': '/7/elutee-number',
-         'title': '7.4c Elutee number',
-         'assets': ['/tester.py', '/sunnikuupaevad.txt']
          }
+
     ]
 
     ex_ids = []
@@ -182,14 +85,27 @@ def add_exercises(course_id, exercise_ids, threshold):
 
 
 def add_teachers(course_id, teachers):
-    pass
+    add_teacher(course_id, teachers)
 
 
 if __name__ == '__main__':
-    course_id = create_course('...')
-    print(course_id)
-    ex_ids = create_exercises()
-    print(ex_ids)
+    #course_id = create_course('Tehnoloogia tarbijast loojaks (rühmT)')
+    #print(course_id)
+    #ex_ids = create_exercises()
+    #print(ex_ids)
+    course_id = '31'
+    #ex_ids = list(map(str,[48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 61, 64, 153, 154, 155, 160, 156, 157, 158, 159, 161, 162, 21, 22, 163, 24, 25, 191, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]))
+
+    # TTL
+    #ex_ids = list(map(str,[51, 52, 53, 137, 138, 139, 140, 141, 59, 61, 64, 153, 154, 155, 160, 156, 157, 158, 159, 161, 162, 21, 22, 163, 24, 25, 191, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 192]))
+
+    # Tarkvaraarendus
+    ex_ids = list(map(str,[164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190]))
+
+    # TTL ver 2
+    # ex_ids = list(map(str,[48, 193, 50, 51, 52, 194, 195, 138, 139, 140, 141, 59, 61, 64, 153, 154, 155, 160, 156, 157, 158, 159, 161, 162, 21, 22, 163, 24, 25, 191, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 192]))
     add_exercises(course_id, ex_ids, 100)
+    add_teachers(course_id, ['tauno.palts@ut.ee'])
+
 
 
