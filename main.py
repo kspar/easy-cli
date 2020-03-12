@@ -4,6 +4,7 @@ from autoass import autoass
 from new_course import new_course
 from new_course_exercise import new_course_exercise
 from new_exercise import new_exercise
+from update_exercise import update_exercise
 from add_teacher import add_teacher
 from reorder_excercises import reorder_exercises
 from link_moodle import link_moodle_course
@@ -20,6 +21,9 @@ def handle_new_exercise(args):
 
     print(id)
 
+def handle_upd_exercise(args):
+    update_exercise(args.exercise_id, args.title, args.html_file, args.adoc_file, args.public, args.grader, args.grading_file,
+                 args.image, args.max_time, args.max_mem, args.asset_files, args.executors)
 
 def handle_new_course_ex(args):
     new_course_exercise(args.course_id, args.exercise_id, args.threshold, args.soft_deadline, args.hard_deadline,
@@ -67,6 +71,22 @@ if __name__ == '__main__':
     new_ex.add_argument('--asset-files', nargs='*', default=[])
     new_ex.add_argument('--executors', nargs='+', default=[])
     new_ex.set_defaults(func=handle_new_exercise)
+
+    # Update exercise
+    upd_ex = subparsers.add_parser('update-exercise')
+    upd_ex.add_argument("--exercise-id", required=True)
+    upd_ex.add_argument("--title", required=True)
+    upd_ex.add_argument("--html-file", required=False)
+    upd_ex.add_argument("--adoc-file", required=False)
+    upd_ex.add_argument("--public", action='store_true')
+    upd_ex.add_argument("--grader", required=True, choices=['auto', 'teacher'])
+    upd_ex.add_argument("--grading-file", required=False)
+    upd_ex.add_argument("--image", required=False)
+    upd_ex.add_argument("--max-time", required=False, type=int)
+    upd_ex.add_argument("--max-mem", required=False, type=int)
+    upd_ex.add_argument('--asset-files', nargs='*', default=[])
+    upd_ex.add_argument('--executors', nargs='+', default=[])
+    upd_ex.set_defaults(func=handle_upd_exercise)
 
     # New course exercise
     new_course_ex = subparsers.add_parser("add-exercise-to-course")
