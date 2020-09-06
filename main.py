@@ -9,6 +9,11 @@ from add_teacher import add_teacher
 from reorder_excercises import reorder_exercises
 from link_moodle import link_moodle_course
 from sync_grades import sync_grades
+from add_teachers_to_group import add_teachers_to_group
+from create_group import create_group
+from delete_group import delete_group
+from remove_teacher_course import remove_teacher_course
+from remove_teacher_group import remove_teacher_group
 
 
 def handle_new_course(args):
@@ -17,13 +22,15 @@ def handle_new_course(args):
 
 def handle_new_exercise(args):
     id = new_exercise(args.title, args.html_file, args.adoc_file, args.public, args.grader, args.grading_file,
-                 args.image, args.max_time, args.max_mem, args.asset_files, args.executors)
+                      args.image, args.max_time, args.max_mem, args.asset_files, args.executors)
 
     print(id)
 
+
 def handle_upd_exercise(args):
     update_exercise(args.exercise_id, args.title, args.html_file, args.adoc_file, args.public, args.grader, args.grading_file,
-                 args.image, args.max_time, args.max_mem, args.asset_files, args.executors)
+                    args.image, args.max_time, args.max_mem, args.asset_files, args.executors)
+
 
 def handle_new_course_ex(args):
     new_course_exercise(args.course_id, args.exercise_id, args.threshold, args.soft_deadline, args.hard_deadline,
@@ -34,18 +41,41 @@ def handle_new_course_ex(args):
 def handle_teacher_autoass(args):
     autoass(args.course, args.exercise, args.solution_file)
 
+
 def handle_add_teacher(args):
     add_teacher(args.course_id, args.teachers)
+
+
+def handle_remove_teacher_course(args):
+    remove_teacher_course(args.course_id, args.teachers)
+
+
+def handle_add_teachers_to_group(args):
+    add_teachers_to_group(args.course_id, args.teachers, args.group_id)
+
+
+def handle_remove_teacher_group(args):
+    remove_teacher_group(args.course_id, args.teacher, args.group_id)
+
+
+def handle_create_group(args):
+    create_group(args.course_id, args.name)
+
+
+def handle_delete_group(args):
+    delete_group(args.course_id, args.group_id)
+
 
 def handle_reorder(args):
     reorder_exercises(args.course_id, args.exercise_id, args.new_index)
 
+
 def handle_link_moodle(args):
     link_moodle_course(args.course_id, args.moodle_short_name, args.sync_students, args.sync_grades)
 
+
 def handle_sync_grades(args):
     sync_grades(args.course_id)
-
 
 
 if __name__ == '__main__':
@@ -114,6 +144,38 @@ if __name__ == '__main__':
     add_teacher_parser.add_argument('--teachers', nargs='+', required=True)
     add_teacher_parser.set_defaults(func=handle_add_teacher)
 
+    # Remove teacher from course
+    remove_teacher_parser = subparsers.add_parser('remove-teacher-course')
+    remove_teacher_parser.add_argument('--course-id', required=True)
+    remove_teacher_parser.add_argument('--teachers', nargs='+', required=True)
+    remove_teacher_parser.set_defaults(func=handle_remove_teacher_course)
+
+    # Add teachers to group
+    add_teachers_to_group_parser = subparsers.add_parser('add-teachers-group')
+    add_teachers_to_group_parser.add_argument('--course-id', required=True)
+    add_teachers_to_group_parser.add_argument('--teachers', nargs='+', required=True)
+    add_teachers_to_group_parser.add_argument('--group-id', required=True)
+    add_teachers_to_group_parser.set_defaults(func=handle_add_teachers_to_group)
+
+    # Remove teacher from group
+    remove_teacher_from_group_parser = subparsers.add_parser('remove-teacher-group')
+    remove_teacher_from_group_parser.add_argument('--course-id', required=True)
+    remove_teacher_from_group_parser.add_argument('--teacher', required=True)
+    remove_teacher_from_group_parser.add_argument('--group-id', required=True)
+    remove_teacher_from_group_parser.set_defaults(func=handle_remove_teacher_group)
+
+    # Create group
+    create_group_parser = subparsers.add_parser('create-group')
+    create_group_parser.add_argument('--course-id', required=True)
+    create_group_parser.add_argument('--name', required=True)
+    create_group_parser.set_defaults(func=handle_create_group)
+
+    # Delete group
+    delete_group_parser = subparsers.add_parser('delete-group')
+    delete_group_parser.add_argument('--course-id', required=True)
+    delete_group_parser.add_argument('--group-id', required=True)
+    delete_group_parser.set_defaults(func=handle_delete_group)
+
     # Reorder exercises
     reorder = subparsers.add_parser("reorder")
     reorder.add_argument("--course-id", required=True)
@@ -136,4 +198,3 @@ if __name__ == '__main__':
 
     args = top_parser.parse_args()
     args.func(args)
-
