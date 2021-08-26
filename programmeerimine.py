@@ -2,6 +2,7 @@ from new_exercise import new_exercise
 from new_course import new_course
 from new_course_exercise import new_course_exercise
 from add_teacher import add_teacher
+from add_students import add_students
 
 
 def create_exercises():
@@ -93,19 +94,30 @@ if __name__ == '__main__':
     #print(course_id)
     #ex_ids = create_exercises()
     #print(ex_ids)
-    course_id = '31'
+    course_id = '54'
+
+    # Programmeerimine
+    # Õige
+    #ex_ids = list(map(str,[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]))
     #ex_ids = list(map(str,[48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 61, 64, 153, 154, 155, 160, 156, 157, 158, 159, 161, 162, 21, 22, 163, 24, 25, 191, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]))
 
     # TTL
     #ex_ids = list(map(str,[51, 52, 53, 137, 138, 139, 140, 141, 59, 61, 64, 153, 154, 155, 160, 156, 157, 158, 159, 161, 162, 21, 22, 163, 24, 25, 191, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 192]))
 
     # Tarkvaraarendus
-    ex_ids = list(map(str,[164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190]))
+    #ex_ids = list(map(str,[164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190]))
 
     # TTL ver 2
-    # ex_ids = list(map(str,[48, 193, 50, 51, 52, 194, 195, 138, 139, 140, 141, 59, 61, 64, 153, 154, 155, 160, 156, 157, 158, 159, 161, 162, 21, 22, 163, 24, 25, 191, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 192]))
+    ex_ids = list(map(str,[48, 193, 50, 51, 52, 194, 195, 138, 139, 140, 141, 59, 153, 61, 154, 155, 64, 160, 156, 157, 158, 159, 161, 162, 21, 22, 163, 24, 25, 191, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 192]))
     add_exercises(course_id, ex_ids, 100)
-    add_teachers(course_id, ['tauno.palts@ut.ee'])
+    add_teachers(course_id, ['andrisoone@gmail.com'])
+
+    # Maardu Gümnaasium
+    #g1 = ['taja.grisina@mgm.ee', 'roman.komaldinov@mgm.ee', 'erik.lavrov@mgm.ee', 'nikita.matrossov@mgm.ee', 'anastassia.nesterenko@mgm.ee', 'stella.parbo@mgm.ee', 'anna.prudnikova@mgm.ee', 'marleen.roos@mgm.ee', 'erik.sviridenko@mgm.ee', 'arina.seibak@mgm.ee', 'katrin.viir@mgm.ee', 'gert.kasari@mgm.ee', 'aleksandra.tostsuk@mgm.ee', 'nora.ounapuu@mgm.ee']
+    #g2 = ['jana.antonisina@mgm.ee', 'dajana.babenko@mgm.ee', 'diana.horolski@mgm.ee', 'alisa.kokh@mgm.ee', 'eerika.komelkova@mgm.ee', 'artjom.oganesjan@mgm.ee', 'jaroslav.ostrinski@mgm.ee', 'veronika.rostovtseva@mgm.ee', 'mark.sazonov@mgm.ee', 'mark.terehhov@mgm.ee', 'anna.vassiljeva@mgm.ee', 'veronica.vaht@mgm.ee', 'tigran.gjulumjan@mgm.ee', 'zlata.zotovich@mgm.ee']
+    #add_students(course_id, g2, '48')
+
+
 
 
 
