@@ -33,11 +33,11 @@ def controller_deliver_tokens():
         body = request.get_json()
         _write_tokens(body['access_token'], int(body['access_token_valid_sec']), body['refresh_token'])
 
-        if browser_process is not None:
-            print("Terminating")
-            browser_process.terminate()
-        else:
-            print("Browser process is None ???")
+        #if browser_process is not None:
+        #    print("Terminating")
+        #    browser_process.terminate()
+        #else:
+        #    print("Browser process is None ???")
 
         _shutdown_server()
 
@@ -80,9 +80,10 @@ def _get_free_port():
 
 def _open_browser(url):
     global browser_process
-    browser_name = webbrowser.get().name
-    browser_process = subprocess.Popen([browser_name, url],
-                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    webbrowser.open(url)
+    #browser_name = webbrowser.get().name
+    #browser_process = subprocess.Popen([browser_name, url],
+    #                                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
 def _refresh_using_refresh_token() -> bool:
