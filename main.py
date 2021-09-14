@@ -14,6 +14,7 @@ from create_group import create_group
 from delete_group import delete_group
 from remove_teacher_course import remove_teacher_course
 from remove_teacher_group import remove_teacher_group
+from add_students import add_students
 
 
 def handle_new_course(args):
@@ -57,6 +58,8 @@ def handle_add_teachers_to_group(args):
 def handle_remove_teacher_group(args):
     remove_teacher_group(args.course_id, args.teacher, args.group_id)
 
+def handle_add_students(args):
+    add_students(args.course_id, args.students, args.group_id)
 
 def handle_create_group(args):
     create_group(args.course_id, args.name)
@@ -163,6 +166,13 @@ if __name__ == '__main__':
     remove_teacher_from_group_parser.add_argument('--teacher', required=True)
     remove_teacher_from_group_parser.add_argument('--group-id', required=True)
     remove_teacher_from_group_parser.set_defaults(func=handle_remove_teacher_group)
+
+    # Add students
+    add_students_parser = subparsers.add_parser('add-students')
+    add_students_parser.add_argument('--course-id', required=True)
+    add_students_parser.add_argument('--students', nargs='+', required=True)
+    add_students_parser.add_argument('--group-id', required=False)
+    add_students_parser.set_defaults(func=handle_add_students)
 
     # Create group
     create_group_parser = subparsers.add_parser('create-group')

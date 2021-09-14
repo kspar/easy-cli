@@ -2,6 +2,7 @@ from new_exercise import new_exercise
 from new_course import new_course
 from new_course_exercise import new_course_exercise
 from add_teacher import add_teacher
+from add_students import add_students
 
 
 def create_exercises():
@@ -109,7 +110,7 @@ if __name__ == '__main__':
     # TTL ver 2
     # ex_ids = list(map(str,[48, 193, 50, 51, 52, 194, 195, 138, 139, 140, 141, 59, 61, 64, 153, 154, 155, 160, 156, 157, 158, 159, 161, 162, 21, 22, 163, 24, 25, 191, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 192]))
     add_exercises(course_id, ex_ids, 100)
-    add_teachers(course_id, ['carmen.akkermann@ut.ee'])
+    add_teachers(course_id, ['tauno.palts@ut.ee'])
 
 
 
