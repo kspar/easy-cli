@@ -15,5 +15,4 @@ def link_moodle_course(course_id: str, moodle_short_name: str, sync_students: bo
 
     resp = requests.put(conf.EMS_BASE_URL + '/courses/' + course_id + '/moodle', json=body, headers=util.get_token_header())
     print(resp.status_code)
-    print(resp.json())
 

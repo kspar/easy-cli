@@ -74,7 +74,7 @@ def handle_reorder(args):
 
 
 def handle_link_moodle(args):
-    link_moodle_course(args.course_id, args.moodle_short_name, args.sync_students, args.sync_grades)
+    link_moodle_course(args.course_id, args.moodle_short_name, args.sync_students, args.sync_grades, args.force)
 
 
 def handle_sync_grades(args):
@@ -128,8 +128,8 @@ if __name__ == '__main__':
     new_course_ex.add_argument('--threshold', required=True, type=int)
     new_course_ex.add_argument('--soft-deadline')
     new_course_ex.add_argument('--hard-deadline')
-    new_course_ex.add_argument('--student-visible', action='store_true', default=True)
-    new_course_ex.add_argument('--assessments-student-visible', action='store_true', default=True)
+    new_course_ex.add_argument('--student-visible', action='store_true')
+    new_course_ex.add_argument('--assessments-student-visible', action='store_true')
     new_course_ex.add_argument('--instructions-html')
     new_course_ex.add_argument('--title-alias')
     new_course_ex.set_defaults(func=handle_new_course_ex)
@@ -197,8 +197,9 @@ if __name__ == '__main__':
     link_moodle = subparsers.add_parser("link-moodle")
     link_moodle.add_argument("--course-id", required=True)
     link_moodle.add_argument("--moodle-short-name", required=True)
-    link_moodle.add_argument("--sync-students", action='store_true', default=False)
-    link_moodle.add_argument("--sync-grades", action='store_true', default=False)
+    link_moodle.add_argument("--sync-students", action='store_true')
+    link_moodle.add_argument("--sync-grades", action='store_true')
+    link_moodle.add_argument("--force", action='store_true')
     link_moodle.set_defaults(func=handle_link_moodle)
 
     # Synchronize grades

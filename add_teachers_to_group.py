@@ -6,7 +6,7 @@ import util
 
 def add_teachers_to_group(course_id: str, teachers: list, group_id: str):
 
-    teachers_list = list(map(lambda e: {'username': e}, teachers))
+    teachers_list = list(map(lambda e: {'id': e}, teachers))
 
     body = {
         'teachers': teachers_list

@@ -42,6 +42,7 @@ def new_exercise(title: str, html_file: str, adoc_file: str, public: bool, grade
     resp = requests.post(conf.EMS_BASE_URL + '/exercises', json=body, headers=util.get_token_header())
     print(resp.status_code)
     j = resp.json()
+    print(j)
     return j['id']
 
 
